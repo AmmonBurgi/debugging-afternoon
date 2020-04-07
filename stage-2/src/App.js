@@ -5,13 +5,13 @@ import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
 
 class App extends Component {
-  constuctor(props) {
-    super(props);
+  constructor(props) {
+    super(props)
     this.state = {
       products: [],
       cart: [],
       showCart: false
-    };
+    }
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
     this.navigate = this.navigate.bind(this);
@@ -21,17 +21,17 @@ class App extends Component {
       .get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
-          products: response
+          products: response.data
         });
       });
   }
   addToCart(item) {
     this.setState({
-      cart: item
+      cart: [...this.state.cart, item]
     });
   }
   removeFromCart(index) {
-    let cartCopy = this.state.products.slice();
+    let cartCopy = this.state.cart.slice();
     cartCopy.splice(index, 1);
     this.setState({
       cart: cartCopy
@@ -50,6 +50,7 @@ class App extends Component {
   }
   render() {
     const { products, cart, showCart } = this.state;
+    console.log(cart)
     return (
       <div className="App">
         <NavBar navigate={this.navigate} />
